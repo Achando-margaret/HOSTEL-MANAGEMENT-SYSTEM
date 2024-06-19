@@ -1,16 +1,18 @@
-from sqlalchemy import Column, Integer, ForeignKey, Date
+from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
 
 class Booking(Base):
     __tablename__ = 'bookings'
+    
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey('students.id'))
     room_id = Column(Integer, ForeignKey('rooms.id'))
-    start_date = Column(Date, nullable=False)
-    end_date = Column(Date, nullable=False)
-    student = relationship('Student', back_populates='bookings')
-    room = relationship('Room', back_populates='bookings')
+    start_date = Column(DateTime)
+    end_date = Column(DateTime)
+
+    student = relationship("Student", back_populates="bookings")
+    room = relationship("Room", back_populates="bookings")
 
     def __repr__(self):
         return f"Booking(id={self.id}, student_id={self.student_id}, room_id={self.room_id}, start_date={self.start_date}, end_date={self.end_date})"
